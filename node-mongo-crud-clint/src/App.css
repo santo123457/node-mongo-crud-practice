@@ -1,0 +1,31 @@
+body{
+    background-color: blueviolet;
+    color: aliceblue;
+    font-weight: bolder;
+}
+h2{
+    
+    margin: 50px 0 50px 0;
+    
+    text-align: center;
+}
+input, button {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    height: 30px;
+    width: 250px;
+    padding: 0 10px;
+    
+}
+input:focus{
+    outline: none!important;
+}
+div .userCard {
+    text-align: center;
+    border: 1px solid rgb(12, 235, 183);
+    padding: 50px;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 30px;
+}

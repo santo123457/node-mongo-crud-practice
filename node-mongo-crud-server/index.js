@@ -31,12 +31,34 @@ async function run() {
       const users = await cursor.toArray();
       res.send(users);
     });
+
+    app.get("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const user = await userCollection.findOne(query);
+      res.send(user);
+    });
     app.post("/users", async (req, res) => {
       const user = req.body;
       const result = await userCollection.insertOne(user);
       res.send(result);
     });
 
+    app.put("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const user = req.body;
+      const option = {upsert : true};
+      const updateUser ={
+        $set :{
+          name : user.name,
+          address : user.address,
+          email : user.email
+        }
+      }
+      const result = await userCollection.updateOne(filter,updateUser,option);
+      res.send(result);
+    });
     app.delete("/users/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -44,9 +66,7 @@ async function run() {
       console.log(result);
       res.send(result);
     });
-    
   } finally {
-    
   }
 }
 run().catch((err) => console.error(err));

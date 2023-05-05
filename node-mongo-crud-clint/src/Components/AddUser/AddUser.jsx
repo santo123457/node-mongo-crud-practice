@@ -15,7 +15,9 @@ const AddUser = () => {
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        event.target.reset()
+      });
   };
   const handleInputBlur = (event) => {
     const field = event.target.name;
@@ -52,6 +54,7 @@ const AddUser = () => {
           name="FakePassword"
           placeholder="type your password"
         />
+        
         <button type="submit">Add User</button>
       </form>
     </div>
