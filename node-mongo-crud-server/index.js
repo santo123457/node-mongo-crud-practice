@@ -3,13 +3,15 @@ const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const port = process.env.PORT || 5000;
+require('dotenv').config()
+
 
 //middleWare
 app.use(cors());
 app.use(express.json());
 
-const uri =
-  "mongodb+srv://dbUser:ekXJIbBrdP5nW34l@cluster0.pldoz6k.mongodb.net/?retryWrites=true&w=majority";
+const uri = process.env.VITE_DB_USER;
+
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -48,15 +50,15 @@ async function run() {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const user = req.body;
-      const option = {upsert : true};
-      const updateUser ={
-        $set :{
-          name : user.name,
-          address : user.address,
-          email : user.email
-        }
-      }
-      const result = await userCollection.updateOne(filter,updateUser,option);
+      const option = { upsert: true };
+      const updateUser = {
+        $set: {
+          name: user.name,
+          address: user.address,
+          email: user.email,
+        },
+      };
+      const result = await userCollection.updateOne(filter, updateUser, option);
       res.send(result);
     });
     app.delete("/users/:id", async (req, res) => {
